@@ -1,4 +1,4 @@
-# Ponto Eletronico
+# Eletronic Point
 Web system developed for the electronic point collection of trainees of the "Diário de Natal" project.
 
 ## Project
