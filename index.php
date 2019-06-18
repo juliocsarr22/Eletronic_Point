@@ -15,6 +15,7 @@ if(isset($_SESSION['nome'])){
     $_SESSION['nome'] = $usuario['nome'];
     $_SESSION['id'] = $usuario['id'];
     $_SESSION['tipo'] = $usuario['tipo'];
+    $_SESSION['matricula'] = $usuario['matricula'];
     header('Location: dashboard.php');
   }else{
     $erro = true;
@@ -34,20 +35,20 @@ if(isset($_SESSION['nome'])){
     <link rel="stylesheet" type="text/css" href="css/bootstrap-index.min.css">
     <link rel="stylesheet" type="text/css" href="css/animate.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-  <style>
-    .subscribe_form .subscribe{
-      width: 100%;
-      border-bottom-left-radius: 30px;
-      border-top-left-radius: 30px;
-      top: 100%;
-    }
-    section{
-      margin-top: 30px;
-    }
-    .subcription-info{
-      margin-bottom:80px;
-    }
-  </style>
+    <style>
+      .subscribe_form .subscribe{
+        width: 100%;
+        border-bottom-left-radius: 30px;
+        border-top-left-radius: 30px;
+        top: 100%;
+      }
+      section{
+        margin-top: 30px;
+      }
+      .subcription-info{
+        margin-bottom:80px;
+      }
+    </style>
   </head>
   <body>
     <div class="content">
@@ -88,7 +89,7 @@ if(isset($_SESSION['nome'])){
     </div>
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/jquery.countdown.min.js"></script> 
     <script src="js/wow.js"></script>
     <script src="js/custom.js"></script>
     <script src="contactform/contactform.js"></script>

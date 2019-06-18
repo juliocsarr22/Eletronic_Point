@@ -34,10 +34,14 @@ require_once('bdd.php');
                     </div>
                     <div>
                         <output id="hora" style="font-family: 'arial black', 'avant garde'; font-size: 50px;"></output>             
-                    </div> 
-                    <button class="btn btn-primary" type="submit">Registrar</button><br>
-                    <br>
-                    <textarea rows="5" cols="80" maxlength="500" placeholder="Justificativa de atraso/adiantamento de horas"></textarea>
+                    </div>
+                    <?php 
+                    if(isset($_SESSION['tipo'])&&($_SESSION['tipo'] == 0)){ ?>
+                        <form action="loading.php"  method="post">
+                            <a class="btn btn-success" href="loading.php?id=<?php echo $_SESSION['id']; ?>&type=0&month=<?php echo date('n');?>">Registrar entrada</a>
+                            <a class="btn btn-danger" href="loading.php?id=<?php echo $_SESSION['id']; ?>&type=1">Registrar saída</a>
+                        </form>
+                    <?php } ?>
                 </div> 
             </div>
         </div>
@@ -72,4 +76,5 @@ require_once('bdd.php');
             setTimeout("atualizaRelogio()",1000);
         }
     </script>   
+    
 </html>

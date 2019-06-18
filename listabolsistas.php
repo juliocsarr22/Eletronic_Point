@@ -3,7 +3,6 @@
   if(!isset($_SESSION['nome'])){
     header('Location: login.php');
   }
-
   require_once('php/controlador.php');
   $cont = new Controlador();
   // definições de host, database, usuário e senha
@@ -23,8 +22,10 @@
   $linha = mysqli_fetch_assoc($dados);
   // calcula quantos dados retornaram
   $total = mysqli_num_rows($dados);
+  if(isset($_SESSION['tipo'])&&($_SESSION['tipo'] == 0)){
+    header("Location: index.php");
+  } 
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -32,37 +33,22 @@
   <meta charset="UTF-8">
       
     <style>
-      body {
+      body{
           padding-top: 70px;
-          /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
       }
-
       .col-centered{
           float: none;
           margin: 0 auto;
       }
-
       .ordenavel{
         cursor: pointer;
-      }
-    
-      
+      }      
     </style>
-    
-    
   </head>
-
   <body class="fixed-nav" id="page-top">
   <?php require_once 'nav.php'; ?>
-
     <div class="content-wrapper py-3">
       <div class="container-fluid">
-        <!-- Breadcrumbs -->
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item active">
-            Listar 
-          </li>
-        </ol>
         <div class="container-fluid">
         <div class="row">
           <div class="col-lg-12">
@@ -71,7 +57,6 @@
                 <tr>
                   <th scope="col">Nome</th>
                   <th scope="col">Matricula</th>
-                  <th scope="col">Editar</th>
                   <th scope="col">Remover</th>
                   <th scope="col">Folha de Ponto</th>
                 </tr>
@@ -84,16 +69,14 @@
               <tr>
                   <td><span class="ordenavel"><?=$linha['nome']?></span></td>
                   <td><span class="ordenavel"><?=$linha['matricula']?></span></td>
-                  <td><a href="#" class="btn btn-primary" type ="button"></a></td>
                   <td><form method="post"><button type="submit" class="btn btn-danger"><input type="hidden" name="excluir" value="<?= $linha["idUsuario"] ?>"></button></form></td>
-                  <td><a href="folhaponto.php" class="btn btn-success" type ="button"></a></td>
+                  <td><a href="folha-admin.php?id=<?php echo $linha['idUsuario'];?>" class="btn btn-success" type ="input" ></a></td>
               </tr>
             <?php
                     // finaliza o loop que vai mostrar os dados
                     }while($linha = mysqli_fetch_assoc($dados));
                 // fim do if 
                 }
-
             ?>
           </table>
           </div>
@@ -109,7 +92,6 @@
     </div>
     <!-- /.container -->
         </div>
-    
       </div>
     </div>
     <?php include 'footer.php'; ?>

@@ -16,8 +16,11 @@
   // seleciona a base de dados em que vamos trabalhar
   mysqli_select_db($con, 'pontoeletronico');
   // cria a instrução SQL que vai selecionar os dados
-  $nome = $_SESSION["nome"];
-  $id = $_SESSION["id"];
+  $id = $_GET["id"];
+  $queryN = sprintf("SELECT nome FROM usuario WHERE idUsuario = $id");
+  $dadosN = mysqli_query($con, $queryN) or die(mysqli_error($con));
+  $linhaN = mysqli_fetch_assoc($dadosN); 
+
   if(!isset($_POST["mes"])){
     $query = sprintf("SELECT * FROM folhaponto WHERE usuario_idusuario = $id");
   } else {
@@ -30,14 +33,12 @@
   $linha = mysqli_fetch_assoc($dados);        
   // calcula quantos dados retornaram
   $total = mysqli_num_rows($dados);
-
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
   <?php require_once 'head.php'; ?>
-  <meta charset="UTF-8">
     <style>
       body{
           padding-top: 70px;
@@ -60,7 +61,7 @@
           <div class="col-lg-12">
             <table class="table table-striped">
               <thead>
-                <center><h4><?php echo $nome ?><h4></center>
+                <center><h4><?php echo $linhaN['nome'] ?><h4></center>
                 <tr>
                   <th scope="col">Data</th>
                   <th scope="col">Hora de Entrada</th>
@@ -106,15 +107,19 @@
                 }
             ?>
           </table>
-
           <div class="col-md-3">
-              <form method="POST" enctype="multipart/form-data" id = "form">
+              <form method="POST" enctype="multipart/form-data" action="folha-admin.php?id=<?php echo $id;?>" id = "form">
                       <select class="form-control" id="sel1" name = "mes">
-                        <option id="month" selected value = "0">Mês Selecionado</option>
+                        <option selected value = "0">Mês Selecionado</option>
                         <?php $cont->listarMeses(); ?>
                       </select>
                       <br> 
                       <button class="btn btn-success" type="submit" id="btn">Pesquisar</button>
+                      <?php
+                      if(isset($_SESSION['tipo'])&&($_SESSION['tipo'] == 1)){ ?>
+                        <button class="btn btn-primary" onclick="Imprimir()" id="btn">Imprimir</button>
+                      <?php } ?>
+                      
                </form>
           </div>
           <style type="text/css" media="print">
